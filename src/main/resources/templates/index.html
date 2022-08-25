@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>My page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
-<div align="center">
+<div class="container-fluid text-center">
     <h1>Hello World!!!!</h1>
-    <h2><a href="/user">Manage Users</a></h2>
-    <p>haha</p>
-    <h3>ok yes abc</h3>
-    <h3>ok yes Haha</h3>
-    <h4>ok I am h4</h4>
-    <h3>ok yes h3h3h3</h3>
-    <h5>ok</h5>
-    haha
+    <a class="h2" th:href="@{/user}">Manage Users</a>
 </div>
 </body>
 </html>
