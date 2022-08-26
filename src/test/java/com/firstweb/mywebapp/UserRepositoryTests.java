@@ -9,12 +9,14 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.Optional;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
 public class UserRepositoryTests {
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @Test
     public void testAddUser(){
@@ -24,7 +26,7 @@ public class UserRepositoryTests {
         user.setFirstName("Yen");
         user.setLastName("Luong");
 
-        User savedUser = repository.save(user);
+        User savedUser = userRepository.save(user);
 
         Assertions.assertThat(savedUser).isNotNull();
         Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
@@ -32,11 +34,44 @@ public class UserRepositoryTests {
     }
     @Test
     public void testListAll(){
-        Iterable<User> users = repository.findAll();
+        Iterable<User> users = userRepository.findAll();
         Assertions.assertThat(users).hasSizeGreaterThan(0);
 
         for (User user : users){
             System.out.println(user);
         }
     }
+    @Test
+    public void testFindById(){
+        Optional<User> optionalUser = userRepository.findById(1);
+
+        Assertions.assertThat(optionalUser).isNotNull();
+        System.out.println(optionalUser);
+    }
+    @Test
+    public void testGet(){
+        Optional<User> optionalUser = userRepository.findById(2);
+
+        Assertions.assertThat(optionalUser).isPresent();
+        System.out.println(optionalUser.get());
+    }
+    @Test
+    public void testUpdated(){
+        Optional<User> optionalUser = userRepository.findById(2);
+
+        User user = optionalUser.get();
+        user.setLastName("Luong");
+        userRepository.save(user);
+
+        User updateUser = userRepository.findById(2).get();
+        Assertions.assertThat(updateUser.getLastName()).isEqualTo("Luong");
+    }
+    @Test
+    public void testDelete(){
+        userRepository.deleteById(3);
+
+        Optional<User> optionalUser = userRepository.findById(3);
+        Assertions.assertThat(optionalUser).isNotPresent();
+    }
+
 }
