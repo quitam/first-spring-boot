@@ -7,18 +7,38 @@
 </head>
 <body>
 <div class="container-fluid text-center">
-    <div><h2>Manage User</h2></div>
+    <div class="m-3"><h2>Manage User</h2></div>
+    <div class="mb-2"><a class="h3 btn btn-primary" th:href="@{/user/add}">Add new User</a></div>
+    <div th:if="${message}" class="w-75 mx-auto alert alert-success text-center">
+        [[${message}]]
+    </div>
     <div>
-        <table>
+        <table class="table table-hover mx-auto w-75">
             <thead>
             <tr>
                 <th>ID</th>
                 <th>E-mail</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Enabled</th>
                 <th></th>
             </tr>
             </thead>
+            <tbody>
+            <th:block th:each="user : ${listUser}">
+                <tr>
+                    <td>[[${user.id}]]</td>
+                    <td>[[${user.email}]]</td>
+                    <td>[[${user.firstName}]]</td>
+                    <td>[[${user.lastName}]]</td>
+                    <td>[[${user.enabled}]]</td>
+                    <td>
+                        <a class="h5 btn btn-outline-warning" th:href="@{'/user/edit/'+${user.id}}">Edit</a>
+                        <a class="h5 btn btn-outline-danger" th:href="@{'/user/delete/'+${user.id}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
         </table>
     </div>
 </div>

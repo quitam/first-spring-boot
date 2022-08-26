@@ -57,14 +57,14 @@ public class UserRepositoryTests {
     }
     @Test
     public void testUpdated(){
-        Optional<User> optionalUser = userRepository.findById(2);
+        Optional<User> optionalUser = userRepository.findById(4);
 
         User user = optionalUser.get();
-        user.setLastName("Luong");
+        user.setFirstName("Yến");
         userRepository.save(user);
 
-        User updateUser = userRepository.findById(2).get();
-        Assertions.assertThat(updateUser.getLastName()).isEqualTo("Luong");
+        User updateUser = userRepository.findById(4).get();
+        Assertions.assertThat(updateUser.getFirstName()).isEqualTo("Yến");
     }
     @Test
     public void testDelete(){
